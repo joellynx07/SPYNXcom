@@ -1,0 +1,65 @@
+services:
+  - type: web
+    name: spynxcomerce-backend
+    runtime: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: DATABASE_URL
+        sync: false # paste your Neon connection string in the Render dashboard
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CLIENT_URL
+        sync: false # set to your frontend's Render URL once it's deployed
+      - key: GOOGLE_API_KEY
+        sync: false
+      - key: GOOGLE_API_KEY_2
+        sync: false
+      - key: GOOGLE_API_KEY_3
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-2.0-flash
+      - key: RESEND_API_KEY
+        sync: false
+      - key: EMAIL_FROM
+        value: "SPYNXcomerce <onboarding@resend.dev>"
+      - key: PAYSTACK_SECRET_KEY
+        sync: false
+      - key: PAYSTACK_PUBLIC_KEY
+        sync: false
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_PUBLIC_KEY
+        sync: false
+      - key: COMMISSION_MOMO_NUMBER
+        sync: false
+      - key: COMMISSION_MOMO_NAME
+        sync: false
+      - key: COMMISSION_PERCENT
+        value: "5"
+      - key: BUYER_SERVICE_FEE_PERCENT
+        value: "2"
+    # NOTE: persistent disks require a paid Render instance type. On the free tier,
+    # uploaded photos and custom backgrounds are lost on every restart/deploy — fine
+    # for demoing, but move to Cloudinary/S3 for production (see README).
+    disk:
+      name: spynx-uploads
+      mountPath: /opt/render/project/src/backend/uploads
+      sizeGB: 1
+
+  - type: web
+    name: spynxcomerce-frontend
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_BASE
+        sync: false # set to your backend's Render URL + /api
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

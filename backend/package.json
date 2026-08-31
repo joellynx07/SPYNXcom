@@ -1,0 +1,26 @@
+{
+  "name": "spynxcommerce-backend",
+  "version": "2.0.0",
+  "type": "module",
+  "description": "SPYNXcomerce backend API - electronics marketplace, payments, messaging, AI assistant",
+  "main": "server.js",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "jszip": "^3.10.1",
+    "mammoth": "^1.12.0",
+    "multer": "^1.4.5-lts.1",
+    "nanoid": "^5.0.7",
+    "node-fetch": "^3.3.2",
+    "pg": "^8.13.1",
+    "xlsx": "^0.18.5"
+  }
+}
